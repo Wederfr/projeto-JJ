@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const imprimirChaveamentoBtn = document.getElementById('imprimir-chaveamento');
 
     // URL base do nosso backend
-    const API_URL = 'http://localhost:3000/atletas';
+    const API_URL = 'https://projeto-jj.onrender.com';
 
     // --- Funções de interação com o Backend ---
 
