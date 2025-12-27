@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Chaveamento de Jiu-Jitsu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🥋 Gerador de Chaveamento de Jiu-Jitsu 🥋</h1>
+    </header>
+
+    <main>
+        <section id="cadastro-atleta"> <!-- ID ajustado para corresponder ao script.js se você usá-lo para algo -->
+            <h2>Cadastrar/Editar Atleta</h2>
+            <form id="formulario-atleta">
+                <!-- Campo oculto para guardar o ID do atleta em edição -->
+                <input type="hidden" id="atleta-id"> 
+
+                <div>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" required>
+                </div>
+                <div>
+                    <label for="sexo">Sexo:</label>
+                    <select id="sexo" required>
+                        <option value="">Selecione o sexo</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Masculino">Masculino</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="idade">Idade:</label>
+                    <input type="number" id="idade" min="4" max="99" required>
+                </div>
+                <div>
+                    <label for="peso">Peso (kg):</label>
+                    <input type="number" id="peso" step="0.1" min="10" max="200" required>
+                </div>
+                <div>
+                    <label for="altura">Altura (cm):</label>
+                    <input type="number" id="altura" min="50" max="250" required>
+                </div>
+                <div>
+                    <label for="faixa">Faixa:</label>
+                    <select id="faixa" required>
+                        <option value="">Selecione a faixa</option>
+                        <option value="Branca">Branca</option>
+                        <option value="Cinza">Cinza</option>
+                        <option value="Amarela">Amarela</option>
+                        <option value="Laranja">Laranja</option>
+                        <option value="Verde">Verde</option>
+                        <option value="Azul">Azul</option>
+                        <option value="Roxa">Roxa</option>
+                        <option value="Marrom">Marrom</option>
+                        <option value="Preta">Preta</option>
+                    </select>
+                </div>
+                <div id="form-buttons">
+                    <button type="submit" id="btn-salvar-atleta">Adicionar Atleta</button>
+                    <button type="button" id="btn-limpar-formulario">Limpar</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="listagem-atletas"> <!-- Mantive seu ID, mas o tbody tem o id que o script espera -->
+            <h2>Atletas Cadastrados</h2>
+            <table id="tabela-atletas">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Sexo</th>
+                        <th>Idade</th>
+                        <th>Peso (kg)</th>
+                        <th>Altura (cm)</th>
+                        <th>Faixa</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-atletas">
+                    <!-- Atletas serão inseridos aqui pelo JavaScript -->
+                </tbody>
+            </table>
+            <!-- Esta mensagem pode ser removida ou gerenciada pelo JS se preferir -->
+            <!-- <p id="nenhum-atleta-msg">Nenhum atleta cadastrado ainda.</p> -->
+        </section>
+
+        <section id="acoes">
+            <button id="btn-gerar-chaveamento">Gerar Chaveamento Textual</button>
+            <button id="imprimir-chaveamento">Imprimir Chaveamento (Fluxograma)</button> <!-- NOVO BOTÃO -->
+        </section>
+
+        <section id="chaveamentos">
+            <h2>Chaveamentos Gerados</h2>
+            <!-- Os chaveamentos textuais serão exibidos aqui pelo JavaScript -->
+            <p id="nenhum-chaveamento-msg">Nenhum chaveamento gerado ainda.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Gerador de Chaveamento de Jiu-Jitsu</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
