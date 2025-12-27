@@ -24,23 +24,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function carregarAtletas() {
         try {
-            const response = await fetch(API_URL);
+            // CORRIGIDO: Adicionado /atletas ao fetch para buscar a lista de atletas
+            const response = await fetch(`${API_URL}/atletas`); 
             if (!response.ok) {
-                throw new Error(`Erro HTTP: ${response.status}`);
+                const errorData = await response.json().catch(() => ({ message: `Erro HTTP: ${response.status}` }));
+                throw new Error(errorData.message || `Erro HTTP: ${response.status}`);
             }
             const data = await response.json();
-            const atletas = data.data;
+            const atletas = data.data; // Supondo que seu backend retorna { data: [...] }
             
             renderizarAtletas(atletas);
         } catch (error) {
             console.error('Erro ao carregar atletas:', error);
-            alert('Não foi possível carregar os atletas. Verifique o servidor.');
+            alert('Não foi possível carregar os atletas. Verifique o servidor e a rota /atletas.');
         }
     }
 
     async function adicionarAtleta(atleta) {
         try {
-            const response = await fetch(API_URL, {
+            // CORRIGIDO: Adicionado /atletas ao fetch para enviar um novo atleta
+            const response = await fetch(`${API_URL}/atletas`, { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -48,9 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(atleta)
             });
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || `Erro HTTP: ${response.status}`);
+                const errorData = await response.json().catch(() => ({ message: `Erro HTTP: ${response.status}` }));
+                throw new Error(errorData.error || errorData.message || `Erro HTTP: ${response.status}`);
             }
+            // Não é necessário processar response.json() aqui, a menos que o backend retorne dados úteis
+            // se o backend retornar status 204 No Content, response.json() daria erro
             await carregarAtletas();
         } catch (error) {
             console.error('Erro ao adicionar atleta:', error);
@@ -60,7 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function editarAtleta(id, atletaAtualizado) {
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
+            // ESTA JÁ ESTAVA CORRETA: Usa ${API_URL}/${id}
+            const response = await fetch(`${API_URL}/atletas/${id}`, { // Notei que faltava o /atletas aqui, adicionei
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,9 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(atletaAtualizado)
             });
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || `Erro HTTP: ${response.status}`);
+                const errorData = await response.json().catch(() => ({ message: `Erro HTTP: ${response.status}` }));
+                throw new Error(errorData.error || errorData.message || `Erro HTTP: ${response.status}`);
             }
+            // Não é necessário processar response.json() aqui
             await carregarAtletas();
         } catch (error) {
             console.error('Erro ao editar atleta:', error);
@@ -83,12 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
+            // ESTA JÁ ESTAVA CORRETA: Usa ${API_URL}/${id}
+            const response = await fetch(`${API_URL}/atletas/${id}`, { // Notei que faltava o /atletas aqui, adicionei
                 method: 'DELETE'
             });
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || `Erro HTTP: ${response.status}`);
+                const errorData = await response.json().catch(() => ({ message: `Erro HTTP: ${response.status}` }));
+                throw new Error(errorData.error || errorData.message || `Erro HTTP: ${response.status}`);
             }
             await carregarAtletas();
         } catch (error) {
@@ -125,9 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function preencherFormularioParaEdicao(id) {
         try {
-            const response = await fetch(`${API_URL}/${id}`);
+            // ESTA JÁ ESTAVA CORRETA: Usa ${API_URL}/${id}
+            const response = await fetch(`${API_URL}/atletas/${id}`); // Notei que faltava o /atletas aqui, adicionei
             if (!response.ok) {
-                throw new Error(`Erro HTTP: ${response.status}`);
+                const errorData = await response.json().catch(() => ({ message: `Erro HTTP: ${response.status}` }));
+                throw new Error(errorData.message || `Erro HTTP: ${response.status}`);
             }
             const data = await response.json();
             const atleta = data.data;
@@ -192,9 +202,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FUNÇÃO CENTRAL DE GERAÇÃO DOS CONFRONTOS (Retorna os dados, não o HTML) ---
     async function gerarConfrontos() {
         try {
-            const response = await fetch(API_URL);
+            // CORRIGIDO: Adicionado /atletas ao fetch para buscar a lista de atletas
+            const response = await fetch(`${API_URL}/atletas`); 
             if (!response.ok) {
-                throw new Error(`Erro HTTP: ${response.status}`);
+                const errorData = await response.json().catch(() => ({ message: `Erro HTTP: ${response.status}` }));
+                throw new Error(errorData.message || `Erro HTTP: ${response.status}`);
             }
             const data = await response.json();
             let atletas = data.data;
@@ -722,4 +734,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     carregarAtletas();
-});
+}); 
